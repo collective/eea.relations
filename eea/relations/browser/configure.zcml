@@ -2,6 +2,16 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="eea">
 
+  <!-- Viewlets -->
+  <browser:viewlet
+        name="eea.relations.related_articles"
+        for="*"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        template="template/related_content_notification.pt"
+        class=".app.viewlets.NextRelatedArticleViewlet"
+        permission="zope.Public"
+        />
+
   <browser:page for="..interfaces.IRelationsTool"
                 name="relations.html"
                 template="template/relations.pt"

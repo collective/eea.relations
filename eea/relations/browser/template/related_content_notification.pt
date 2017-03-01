@@ -1,0 +1,10 @@
+<a class="eea-notifier" tal:condition="python:view.available() and obj" tal:define="obj view/get_related_article"
+                        tal:attributes="href obj/Title">
+    <div class="eea-notifier__content"><div class="eea-notifier__figure">
+        <img class="image" tal:attributes="src string:{obj/absolute_url}/image_thumb" />
+    </div>
+        <span class="eea-notifier__text"><span class="eea-notifier__type">Related Article</span>
+            <span class="eea-notifier__heading" tal:content="obj/Title"></span>
+        </span>
+    </div>
+</a>
