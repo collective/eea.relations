@@ -1,0 +1,13 @@
+.eea-notifier {
+  position: fixed;
+  background: #FFF;
+  border-top: 2px solid #006699;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 4;
+  margin-left: -24%;
+  padding-left: 24%;
+  will-change: transform; }
+
+/*# sourceMappingURL=eea_relations.css.dtml.map */

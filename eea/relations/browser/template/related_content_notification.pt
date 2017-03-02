@@ -1,10 +1,14 @@
-<a class="eea-notifier" tal:condition="python:view.available() and obj" tal:define="obj view/get_related_article"
-                        tal:attributes="href obj/Title">
-    <div class="eea-notifier__content"><div class="eea-notifier__figure">
-        <img class="image" tal:attributes="src string:{obj/absolute_url}/image_thumb" />
-    </div>
-        <span class="eea-notifier__text"><span class="eea-notifier__type">Related Article</span>
-            <span class="eea-notifier__heading" tal:content="obj/Title"></span>
+<tal:enabled tal:condition="python:view.available()">
+    <a class="eea-notifier" tal:condition="python:brain" tal:define="brain view/get_related_article; title brain/Title|nothing;
+            url brain/getURL"
+             tal:attributes="href url">
+        <div class="eea-notifier__content"><div class="eea-notifier__figure">
+            <img class="image" tal:attributes="src string:${url}/image_thumb" />
+        </div>
+            <span class="eea-notifier__text"><span class="eea-notifier__type">Related Article</span>
+            <span class="eea-notifier__heading" tal:content="title"></span>
+            <span class="eea-notifier__icon eea-icon eea-icon-arrow-down eea-icon-2x" />
         </span>
-    </div>
-</a>
+        </div>
+    </a>
+</tal:enabled>
