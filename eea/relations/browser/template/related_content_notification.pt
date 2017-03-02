@@ -1,15 +1,19 @@
 <tal:enabled tal:condition="python:view.available()">
-    <a class="eea-notifier" tal:condition="python:brain" tal:define="brain view/get_related_article; title brain/Title|nothing;
-            url brain/getURL"
-             tal:attributes="href url">
-        <div class="eea-notifier__content"><div class="eea-notifier__figure">
-            <img class="image" tal:attributes="src string:${url}/image_thumb" />
-        </div>
-            <span class="eea-notifier__text"><span class="eea-notifier__type">Related Article</span>
-            <span class="eea-notifier__heading" tal:content="title"></span>
-            <span class="eea-notifier__icon eea-icon eea-icon-arrow-down eea-icon-2x" />
-        </span>
-        </div>
-    </a>
+    <tal:defines tal:define="brain view/get_related_article;" tal:condition="brain">
+        <a class="eea-notifier"
+                 tal:define="title brain/Title|nothing;
+                             url brain/getURL"
+                 tal:attributes="href url; data-url python:brain.getURL(1)">
+            <div class="eea-notifier__content"><div class="eea-notifier__figure">
+                <img class="image" tal:attributes="src string:${url}/image_tile" />
+            </div>
+                <div class="eea-notifier__text">
+                    <div class="eea-notifier__type">Related Article</div>
+                    <span class="eea-notifier__heading" tal:content="title"></span>
+                    <span class="eea-notifier__icon eea-icon eea-icon-arrow-down eea-icon-2x" />
+                </div>
+            </div>
+        </a>
+    </tal:defines>
     <a href="#" class="eea-to-top"><span class="eea-icon eea-icon-chevron-up eea-icon-2x" /><span class="eea-to-top-text">Go to top</span></a>
 </tal:enabled>

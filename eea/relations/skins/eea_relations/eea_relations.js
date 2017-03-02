@@ -60,15 +60,39 @@ jQuery(function($){
         });
     });
 
-    $('#socialmedia-viewlet').infiniteScrollHelper({
-        loadMore: function(page, done) {
-            $(".eea-notifier").addClass('eea-notifier--active');
-        }
-    });
-    $(".eea-to-top").click(function(ev){
+    var $notifier = $(".eea-notifier");
+    $notifier.click(function(ev) {
         ev.preventDefault();
+        var $socialmedia = $("#socialmedia-viewlet");
         $.scrollTo({
             behavior: "smooth",
+            left: 0,
+            top: $socialmedia.scrollTop()
+        });
+    });
+
+    $('#content-core').infiniteScrollHelper({
+        loadMore: function(page, done) {
+            $notifier.addClass('eea-notifier--active');
+            var url = $notifier.attr('data-url');
+            var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
+            var $articles = $('article');
+            if (!$articles.filter('[data-url="' + url + '"]').length) {
+                $.get(nextPageUrl, function(data) {
+                    var $content_children = $(data).find('#content').children();
+                    var $article = $("<article />", {'data-url': url});
+                    $content_children.appendTo($article);
+                    $article.insertBefore('#viewlet-below-content');
+                    // call the done callback to let the plugin know you are done loading
+                    done();
+                });
+            }
+        }
+    });
+    $('.eea-to-top').click(function(ev){
+        ev.preventDefault();
+        $.scrollTo({
+            behavior: 'smooth',
             left: 0,
             top: 0
         });

@@ -28,24 +28,32 @@ class NextRelatedArticleViewlet(ViewletBase):
         catalog = getToolByName(context, 'portal_catalog')
         adapter = queryAdapter(context, IThemeTagging, default=None)
         if adapter is None:
-            return []
+            return ""
 
         theme_ids = adapter.tags
+        if not theme_ids:
+            return ""
         now = DateTime()
         query = {'review_state': 'published',
                  'sort_on': 'effective',
                  'sort_order': 'reverse',
-                 'portal_type': 'Article',
+                 'portal_type': ["Article", "News", "Highlight", "Report"],
                  'getThemes': theme_ids[0]
                  }
         date_range = {
             'query': (
-                now - (18 * 30),
+                now - (48 * 30),
                 now,
             ),
             'range': 'min:max',
         }
-
+        context_url = context.absolute_url()
         query['effective'] = date_range
         res = catalog(query)
-        return res[0] if res else []
+        if not res:
+            return ""
+        for brain in res:
+            if brain.getURL() != context_url:
+                return brain
+        return res
+

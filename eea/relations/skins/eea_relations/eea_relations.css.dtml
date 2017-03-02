@@ -3,7 +3,7 @@
   background: #FFF;
   border-top: 2px solid #006699;
   bottom: 0;
-  height: 50px;
+  height: 80px;
   width: 100%;
   z-index: 4;
   margin-left: -24%;
@@ -17,6 +17,14 @@
 .eea-notifier--active {
   margin-bottom: 0;
   opacity: 1; }
+
+.eea-notifier__content {
+  overflow: hidden;
+  padding: 0.5em; }
+
+.eea-notifier__figure {
+  float: left;
+  margin-right: 0.5em; }
 
 .eea-to-top {
   width: 100%;
