@@ -8,6 +8,20 @@
   z-index: 4;
   margin-left: -24%;
   padding-left: 24%;
-  will-change: transform; }
+  will-change: transform;
+  opacity: 0;
+  transition-property: opacity, margin-bottom;
+  transition-duration: 0.3s, 0.25s;
+  transition-timing-function: ease-out; }
+
+.eea-notifier--active {
+  margin-bottom: 0;
+  opacity: 1; }
+
+.eea-to-top {
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin: 2em 0; }
 
 /*# sourceMappingURL=eea_relations.css.dtml.map */

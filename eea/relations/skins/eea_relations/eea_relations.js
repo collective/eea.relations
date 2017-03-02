@@ -60,4 +60,18 @@ jQuery(function($){
         });
     });
 
+    $('#socialmedia-viewlet').infiniteScrollHelper({
+        loadMore: function(page, done) {
+            $(".eea-notifier").addClass('eea-notifier--active');
+        }
+    });
+    $(".eea-to-top").click(function(ev){
+        ev.preventDefault();
+        $.scrollTo({
+            behavior: "smooth",
+            left: 0,
+            top: 0
+        });
+    });
+
 });
