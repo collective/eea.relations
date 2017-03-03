@@ -63,12 +63,14 @@ jQuery(function($){
     var $notifier = $(".eea-notifier");
     $notifier.click(function(ev) {
         ev.preventDefault();
-        var target_url = ev.currentTarget.getAttribute('data-url');
+        var target = ev.currentTarget;
+        var target_url = target.getAttribute('data-url');
         var $articles = $('article');
         var $article = $articles.filter('[data-url="' + target_url + '"]');
         var target_top = $article[0].getBoundingClientRect().top;
         var document_top = document.body.getBoundingClientRect().top;
-        var top = target_top - document_top + 20;
+        var top = target_top - document_top - 100;
+        $(target).removeClass('eea-notifier--active');
         $.scrollTo({
             behavior: "smooth",
             left: 0,
