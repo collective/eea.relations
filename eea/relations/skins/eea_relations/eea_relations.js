@@ -61,6 +61,25 @@ jQuery(function($){
     });
 
     var $notifier = $(".eea-notifier");
+
+    var pushState = function(url) {
+        if (window.history) {
+            return window.history.pushState({index: 0}, "", url);
+        }
+        else {
+            return $.bbq.pushState(url);
+        }
+    };
+
+    var getState = function(url) {
+        if (window.history) {
+            return window.history.replaceState({index: 0}, "", url);
+        }
+        else {
+            return $.bbq.getState(url);
+        }
+    };
+
     $notifier.click(function(ev) {
         ev.preventDefault();
         var target = ev.currentTarget;
@@ -76,6 +95,7 @@ jQuery(function($){
             left: 0,
             top: top
         });
+        pushState(target_url);
     });
 
     $('#content-core').infiniteScrollHelper({
