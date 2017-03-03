@@ -63,11 +63,16 @@ jQuery(function($){
     var $notifier = $(".eea-notifier");
     $notifier.click(function(ev) {
         ev.preventDefault();
-        var $socialmedia = $("#socialmedia-viewlet");
+        var target_url = ev.currentTarget.getAttribute('data-url');
+        var $articles = $('article');
+        var $article = $articles.filter('[data-url="' + target_url + '"]');
+        var target_top = $article[0].getBoundingClientRect().top;
+        var document_top = document.body.getBoundingClientRect().top;
+        var top = target_top - document_top + 20;
         $.scrollTo({
             behavior: "smooth",
             left: 0,
-            top: $socialmedia.scrollTop()
+            top: top
         });
     });
 
@@ -80,6 +85,7 @@ jQuery(function($){
             if (!$articles.filter('[data-url="' + url + '"]').length) {
                 $.get(nextPageUrl, function(data) {
                     var $content_children = $(data).find('#content').children();
+                    $content_children.splice($content_children.length -1);
                     var $article = $("<article />", {'data-url': url});
                     $content_children.appendTo($article);
                     $article.insertBefore('#viewlet-below-content');
