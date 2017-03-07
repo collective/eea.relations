@@ -14,12 +14,12 @@ jQuery(function($){
     $(window).bind('relations.showSortingWidget', function(){
         if ($tab_panels.length) {
             $tab_panels.each(function(){
-               var $this = $(this);
-               var data_attr = $this.find('.page').eq(0).data();
-               if (data_attr && data_attr.count > 10) {
-                   $sort_parent.show();
-                   return false;
-               }
+                var $this = $(this);
+                var data_attr = $this.find('.page').eq(0).data();
+                if (data_attr && data_attr.count > 10) {
+                    $sort_parent.show();
+                    return false;
+                }
             });
         }
     });
@@ -90,29 +90,25 @@ jQuery(function($){
         pushState(target_url);
     });
 
-    $('#content-core').addClass('eea-article').infiniteScrollHelper({
-        loadMore: function(page, done) {
-            $notifier.addClass('eea-notifier--active');
-            var url = $notifier.attr('data-url');
-            var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
-            var $articles = $('.eea-article');
-            if (!$articles.filter('[data-url="' + url + '"]').length) {
-                $.get(nextPageUrl, function(data) {
-                    var $content_children = $(data).find('#content').children();
-                    $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
-                    var $article = $("<article />", {
-                        'data-url': url,
-                        'data-title': $content_children.find('h1').text(),
-                        'class': 'eea-article'
-                    });
-                    $content_children.appendTo($article);
-                    $article.insertBefore('#viewlet-below-content');
-                    // call the done callback to let the plugin know you are done loading
-                    done();
-                });
-            }
-        }
-    });
+    $('#content-core').addClass('eea-article');
+    $notifier.addClass('eea-notifier--active');
+    var url = $notifier.attr('data-url');
+    var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
+    var $articles = $('.eea-article');
+    if (!$articles.filter('[data-url="' + url + '"]').length) {
+        $.get(nextPageUrl, function(data) {
+            var $content_children = $(data).find('#content').children();
+            $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
+            var $article = $("<article />", {
+                'data-url': url,
+                'data-title': $content_children.find('h1').text(),
+                'class': 'eea-article'
+            });
+            $content_children.appendTo($article);
+            $article.insertBefore('#viewlet-below-content');
+            // call the done callback to let the plugin know you are done loading
+        });
+    }
     $('.eea-to-top').click(function(ev) {
         ev.preventDefault();
         $.scrollTo({
@@ -135,12 +131,12 @@ jQuery(function($){
                     break;
                 }
         }, n = function (t) {
-                if (t.id === "content-core") {
-                    set_location(original_document);
-                }
-                else {
-                    set_location({url: t.dataset.url, title: t.dataset.title});
-                }
+            if (t.id === "content-core") {
+                set_location(original_document);
+            }
+            else {
+                set_location({url: t.dataset.url, title: t.dataset.title});
+            }
         }, i = function (t, e) {
             var n = t.getBoundingClientRect();
             return n.bottom > 0 && n.top < e - boundary;
@@ -170,6 +166,7 @@ jQuery(function($){
                 $notifier.removeClass('eea-notifier--active');
             }
             check_current_url();
-        }, 500));
+        }, 300));
     }
 });
+
