@@ -1,3 +1,4 @@
+/* global jQuery, window, document, _ */
 jQuery(function($){
     // 13870 sort relations based on given criteria
     var $relations_parent = $('#relatedItems');
@@ -54,7 +55,7 @@ jQuery(function($){
                 var $el = $(el);
                 var count = $el.data('count');
                 var current_index = slice_index;
-                slice_index = slice_index + count;
+                slice_index += count;
                 $el.append($listing_entries.slice(current_index, slice_index));
             });
         });
@@ -68,15 +69,6 @@ jQuery(function($){
         }
         else {
             return $.bbq.pushState(url);
-        }
-    };
-
-    var getState = function(url) {
-        if (window.history) {
-            return window.history.replaceState({index: 0}, "", url);
-        }
-        else {
-            return $.bbq.getState(url);
         }
     };
 
@@ -98,17 +90,21 @@ jQuery(function($){
         pushState(target_url);
     });
 
-    $('#content-core').infiniteScrollHelper({
+    $('#content-core').addClass('eea-article').infiniteScrollHelper({
         loadMore: function(page, done) {
             $notifier.addClass('eea-notifier--active');
             var url = $notifier.attr('data-url');
             var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
-            var $articles = $('article');
+            var $articles = $('.eea-article');
             if (!$articles.filter('[data-url="' + url + '"]').length) {
                 $.get(nextPageUrl, function(data) {
                     var $content_children = $(data).find('#content').children();
-                    $content_children.splice($content_children.length -1);
-                    var $article = $("<article />", {'data-url': url});
+                    $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
+                    var $article = $("<article />", {
+                        'data-url': url,
+                        'data-title': $content_children.find('h1').text(),
+                        'class': 'eea-article'
+                    });
                     $content_children.appendTo($article);
                     $article.insertBefore('#viewlet-below-content');
                     // call the done callback to let the plugin know you are done loading
@@ -117,13 +113,63 @@ jQuery(function($){
             }
         }
     });
-    $('.eea-to-top').click(function(ev){
+    $('.eea-to-top').click(function(ev) {
         ev.preventDefault();
         $.scrollTo({
             behavior: 'smooth',
             left: 0,
             top: 0
         });
+        set_location(original_document);
     });
 
+    var boundary = 320;
+    var original_document = {url: context_url, title: document.title};
+    function check_current_url() {
+        var t, e = function () {
+            t = window.innerHeight || document.documentElement.clientHeight;
+            var articles = document.querySelectorAll('.eea-article');
+            for (var e = articles.length - 1; e >= 0; e--)
+                if (i(articles[e], t)) {
+                    n(articles[e]);
+                    break;
+                }
+        }, n = function (t) {
+                if (t.id === "content-core") {
+                    set_location(original_document);
+                }
+                else {
+                    set_location({url: t.dataset.url, title: t.dataset.title});
+                }
+        }, i = function (t, e) {
+            var n = t.getBoundingClientRect();
+            return n.bottom > 0 && n.top < e - boundary;
+        };
+        e();
+    }
+
+    function set_location(obj) {
+        var current_path = window.location.href;
+        var notifier_url = obj.url;
+        if (current_path.indexOf(notifier_url) === -1) {
+            pushState(notifier_url);
+            document.title = obj.title;
+            $notifier.removeClass('eea-notifier--active');
+        }
+    }
+    var content_core = document.getElementById("content-core");
+    if ($notifier.length) {
+        jQuery(window).scroll(_.debounce(function() {
+            var content_box = content_core.getBoundingClientRect();
+            var content_box_bottom = content_box.bottom;
+            var window_height = (window.innerHeight || document.documentElement.clientHeight);
+            if (content_box_bottom > 0 && (window_height + content_box.height / 2 > content_box_bottom)) {
+                $notifier.addClass('eea-notifier--active');
+            }
+            else {
+                $notifier.removeClass('eea-notifier--active');
+            }
+            check_current_url();
+        }, 500));
+    }
 });

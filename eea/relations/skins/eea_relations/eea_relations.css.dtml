@@ -1,26 +1,29 @@
 .eea-notifier {
   position: fixed;
-  background: #FFF;
+  background: rgba(255, 255, 255, 0.9);
   border-top: 2px solid #006699;
   bottom: 0;
   height: 80px;
   width: 100%;
   z-index: 4;
-  margin-left: -24%;
-  padding-left: 24%;
+  left: 0;
   will-change: transform;
   opacity: 0;
   transition-property: opacity, margin-bottom;
   transition-duration: 0.3s, 0.25s;
-  transition-timing-function: ease-out; }
+  transition-timing-function: ease-out;
+  visibility: hidden; }
 
 .eea-notifier--active {
   margin-bottom: 0;
-  opacity: 1; }
+  opacity: 1;
+  visibility: visible; }
 
 .eea-notifier__content {
   overflow: hidden;
-  padding: 0.5em; }
+  padding: 0.5em;
+  margin: 0 auto;
+  max-width: 700px; }
 
 .eea-notifier__figure {
   float: left;
