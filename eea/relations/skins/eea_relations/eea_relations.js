@@ -1,4 +1,5 @@
-/* global jQuery, window, document, _ */
+/* global jQuery, window, document, _, context_url */
+
 jQuery(function($){
     // 13870 sort relations based on given criteria
     var $relations_parent = $('#relatedItems');
@@ -61,9 +62,8 @@ jQuery(function($){
         });
     });
 
-    var $notifier = $(".eea-notifier");
-
-    var pushState = function(url) {
+    // 80633 related article
+     var pushState = function(url) {
         if (window.history) {
             return window.history.pushState({index: 0}, "", url);
         }
@@ -72,89 +72,102 @@ jQuery(function($){
         }
     };
 
-    $notifier.click(function(ev) {
-        ev.preventDefault();
-        var target = ev.currentTarget;
-        var target_url = target.getAttribute('data-url');
-        var $articles = $('article');
-        var $article = $articles.filter('[data-url="' + target_url + '"]');
-        var target_top = $article[0].getBoundingClientRect().top;
-        var document_top = document.body.getBoundingClientRect().top;
-        var top = target_top - document_top - 100;
-        $(target).removeClass('eea-notifier--active');
-        $.scrollTo({
-            behavior: "smooth",
-            left: 0,
-            top: top
-        });
-        pushState(target_url);
-    });
-
-    $('#content-core').addClass('eea-article');
-    $notifier.addClass('eea-notifier--active');
-    var url = $notifier.attr('data-url');
-    var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
-    var $articles = $('.eea-article');
-    if (!$articles.filter('[data-url="' + url + '"]').length) {
-        $.get(nextPageUrl, function(data) {
-            var $content_children = $(data).find('#content').children();
-            $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
-            var $article = $("<article />", {
-                'data-url': url,
-                'data-title': $content_children.find('h1').text(),
-                'class': 'eea-article'
-            });
-            $content_children.appendTo($article);
-            $article.insertBefore('#viewlet-below-content');
-            // call the done callback to let the plugin know you are done loading
-        });
-    }
-    $('.eea-to-top').click(function(ev) {
-        ev.preventDefault();
-        $.scrollTo({
-            behavior: 'smooth',
-            left: 0,
-            top: 0
-        });
-        set_location(original_document);
-    });
-
-    var boundary = 320;
-    var original_document = {url: context_url, title: document.title};
-    function check_current_url() {
-        var t, e = function () {
-            t = window.innerHeight || document.documentElement.clientHeight;
-            var articles = document.querySelectorAll('.eea-article');
-            for (var e = articles.length - 1; e >= 0; e--)
-                if (i(articles[e], t)) {
-                    n(articles[e]);
-                    break;
-                }
-        }, n = function (t) {
-            if (t.id === "content-core") {
-                set_location(original_document);
-            }
-            else {
-                set_location({url: t.dataset.url, title: t.dataset.title});
-            }
-        }, i = function (t, e) {
-            var n = t.getBoundingClientRect();
-            return n.bottom > 0 && n.top < e - boundary;
-        };
-        e();
-    }
-
-    function set_location(obj) {
-        var current_path = window.location.href;
-        var notifier_url = obj.url;
-        if (current_path.indexOf(notifier_url) === -1) {
-            pushState(notifier_url);
-            document.title = obj.title;
-            $notifier.removeClass('eea-notifier--active');
+    (function related_article() {
+        var $notifier = $(".eea-notifier");
+        if (!$notifier.length) {
+            return;
         }
-    }
-    var content_core = document.getElementById("content-core");
-    if ($notifier.length) {
+
+        var content_core = document.getElementById("content-core");
+        content_core.classList += 'eea-article';
+
+        // scroll to top when reaching and clicking on go to top link
+        var original_document = {url: context_url, title: document.title};
+        $('.eea-to-top').click(function(ev) {
+            ev.preventDefault();
+            $.scrollTo({
+                behavior: 'smooth',
+                left: 0,
+                top: 0
+            });
+            set_location(original_document);
+        });
+
+        $notifier.click(function(ev) {
+            ev.preventDefault();
+            var target = ev.currentTarget;
+            var target_url = target.getAttribute('data-url');
+            var $articles = $('.eea-article');
+            var $article = $articles.filter('[data-url="' + target_url + '"]');
+            var target_top = $article[0].getBoundingClientRect().top;
+            var document_top = document.body.getBoundingClientRect().top;
+            var top = target_top - document_top - 100;
+            $(target).removeClass('eea-notifier--active');
+            $.scrollTo({
+                behavior: "smooth",
+                left: 0,
+                top: top
+            });
+            pushState(target_url);
+        });
+
+        var url = $notifier.attr('data-url');
+        var nextPageUrl = "http://" + window.location.host + url + '?ajax_load=1';
+        var $articles = $('.eea-article');
+        // add related article through ajax load
+        if (!$articles.filter('[data-url="' + url + '"]').length) {
+            $.get(nextPageUrl, function(data) {
+                var $content_children = $(data).find('#content').children();
+                $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
+                var $article = $("<article />", {
+                    'data-url': url,
+                    'data-title': $content_children.find('h1').text(),
+                    'class': 'eea-article'
+                });
+                $content_children.appendTo($article);
+                $article.insertBefore('#viewlet-below-content');
+            });
+        }
+
+        // set window location helper
+        function set_location(obj) {
+            var current_path = window.location.href;
+            var notifier_url = obj.url;
+            if (current_path.indexOf(notifier_url) === -1) {
+                pushState(notifier_url);
+                document.title = obj.title;
+                $notifier.removeClass('eea-notifier--active');
+            }
+        }
+
+        var boundary = 320;
+        function check_current_url() {
+            var window_height;
+            var change_location = function (t) {
+                if (t.id === "content-core") {
+                    set_location(original_document);
+                }
+                else {
+                    set_location({url: t.dataset.url, title: t.dataset.title});
+                }
+            };
+            var article_in_view = function (t, e) {
+                var n = t.getBoundingClientRect();
+                return n.bottom > 0 && n.top < e - boundary;
+            };
+            var check_scrolled_articles = function () {
+                window_height = window.innerHeight || document.documentElement.clientHeight;
+                var articles = document.querySelectorAll('.eea-article');
+                for (var e = articles.length - 1; e >= 0; e--)
+                    if (article_in_view(articles[e], window_height)) {
+                        change_location(articles[e]);
+                        break;
+                    }
+            };
+            check_scrolled_articles();
+        }
+
+        // show next article notifier when scrolling over half of the given article
         jQuery(window).scroll(_.debounce(function() {
             var content_box = content_core.getBoundingClientRect();
             var content_box_bottom = content_box.bottom;
@@ -167,6 +180,7 @@ jQuery(function($){
             }
             check_current_url();
         }, 300));
-    }
+
+    }());
 });
 
