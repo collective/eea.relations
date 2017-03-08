@@ -128,6 +128,7 @@ jQuery(function($){
                 });
                 $content_children.appendTo($article);
                 $article.insertBefore('#viewlet-below-content');
+                $notifier.addClass("eea-notifier-ready");
             });
         }
 
@@ -171,10 +172,13 @@ jQuery(function($){
 
         // show next article notifier when scrolling over half of the given article
         jQuery(window).scroll(_.debounce(function() {
+            if(!$notifier.hasClass('eea-notifier-ready')) {
+                return;
+            }
             var content_box = content_core.getBoundingClientRect();
             var content_box_bottom = content_box.bottom;
             var window_height = (window.innerHeight || document.documentElement.clientHeight);
-            if (content_box_bottom > 0 && (window_height + content_box.height / 2 > content_box_bottom)) {
+            if (content_box_bottom > 0 && (window_height + window.parseInt(content_box.height / 2) > content_box_bottom)) {
                 $notifier.addClass('eea-notifier--active');
             }
             else {
