@@ -25,6 +25,8 @@ class NextRelatedArticleViewlet(ViewletBase):
         """ Get related article
         """
         context = self.context
+        if context.portal_type not in ['Article', 'News']:
+            return ""
         catalog = getToolByName(context, 'portal_catalog')
         adapter = queryAdapter(context, IThemeTagging, default=None)
         if adapter is None:
@@ -37,12 +39,12 @@ class NextRelatedArticleViewlet(ViewletBase):
         query = {'review_state': 'published',
                  'sort_on': 'effective',
                  'sort_order': 'reverse',
-                 'portal_type': ["Article", "News", "Highlight", "Report"],
+                 'portal_type': ['Article', 'News', 'Fiche'],
                  'getThemes': theme_ids[0]
                  }
         date_range = {
             'query': (
-                now - (48 * 30),
+                now - (3 * 30),
                 now,
             ),
             'range': 'min:max',
