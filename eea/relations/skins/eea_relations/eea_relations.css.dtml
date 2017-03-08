@@ -3,7 +3,7 @@
   background: rgba(255, 255, 255, 0.9);
   border-top: 2px solid #006699;
   bottom: 0;
-  height: 80px;
+  height: 75px;
   width: 100%;
   z-index: 4;
   left: 0;
@@ -12,27 +12,34 @@
   transition-property: opacity, margin-bottom;
   transition-duration: 0.3s, 0.25s;
   transition-timing-function: ease-out;
-  visibility: hidden; }
-
+  visibility: hidden;
+  padding-top: 1em;
+}
 .eea-notifier--active {
   margin-bottom: 0;
   opacity: 1;
-  visibility: visible; }
-
+  visibility: visible;
+}
 .eea-notifier__content {
   overflow: hidden;
   padding: 0.5em;
   margin: 0 auto;
-  max-width: 700px; }
+  max-width: 700px;
+}
+
+.eea-notifier__type {
+    display: block;
+    line-height: 1;
+}
 
 .eea-notifier__figure {
   float: left;
-  margin-right: 0.5em; }
+  margin-right: 0.5em;
+}
 
 .eea-to-top {
   width: 100%;
   display: block;
   text-align: center;
-  margin: 2em 0; }
-
-/*# sourceMappingURL=eea_relations.css.dtml.map */
+  margin: 2em 0;
+}
