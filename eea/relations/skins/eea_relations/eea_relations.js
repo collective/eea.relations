@@ -99,7 +99,8 @@ jQuery(function($){
             var target_url = target.getAttribute('data-url');
             var $articles = $('.eea-article');
             var $article = $articles.filter('[data-url="' + target_url + '"]');
-            var target_top = $article[0].getBoundingClientRect().top;
+            var article = $article[0];
+            var target_top = article.getBoundingClientRect().top;
             var document_top = document.body.getBoundingClientRect().top;
             var top = target_top - document_top - 100;
             $(target).removeClass('eea-notifier--active');
@@ -108,7 +109,8 @@ jQuery(function($){
                 left: 0,
                 top: top
             });
-            pushState(target_url);
+
+            set_location({url: article.dataset.url, title: article.dataset.title});
         });
 
         var url = $notifier.attr('data-url');
