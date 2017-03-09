@@ -85,11 +85,7 @@ jQuery(function($){
         var original_document = {url: context_url, title: document.title};
         $('.eea-to-top').click(function(ev) {
             ev.preventDefault();
-            $.scrollTo({
-                behavior: 'smooth',
-                left: 0,
-                top: 0
-            });
+            window.scrollTo(0, 0);
             set_location(original_document);
         });
 
@@ -104,11 +100,7 @@ jQuery(function($){
             var document_top = document.body.getBoundingClientRect().top;
             var top = target_top - document_top - 100;
             $(target).removeClass('eea-notifier--active');
-            $.scrollTo({
-                behavior: "smooth",
-                left: 0,
-                top: top
-            });
+            window.scrollTo(0, top);
 
             set_location({url: article.dataset.url, title: article.dataset.title});
         });
@@ -120,13 +112,17 @@ jQuery(function($){
         if (!$articles.filter('[data-url="' + url + '"]').length) {
             $.get(nextPageUrl, function(data) {
                 var $content_children = $(data).find('#content').children();
-                $content_children.filter(function(idx, el) { return el.id !== 'relatedItems'; });
+                // remove everything but content-core and content-header
+                var $filtered_content = $content_children.filter(function(idx, el) {
+                    return el.id === 'content-core' || el.className.indexOf('content-header') !== -1;
+
+                });
                 var $article = $("<article />", {
                     'data-url': url,
-                    'data-title': $content_children.find('h1').text(),
+                    'data-title': $filtered_content.find('h1').text(),
                     'class': 'eea-article'
                 });
-                $content_children.appendTo($article);
+                $filtered_content.appendTo($article);
                 $article.insertBefore('#viewlet-below-content');
                 $notifier.addClass("eea-notifier-ready");
             });

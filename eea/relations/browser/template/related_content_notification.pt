@@ -1,14 +1,15 @@
 <tal:enabled tal:condition="python:view.available()">
     <tal:defines tal:define="brain view/get_related_article;" tal:condition="brain">
         <a class="eea-notifier"
-                 tal:define="title brain/Title|nothing;
+                 tal:define="brain python:brain[0];
+                             title brain/Title|nothing;
                              url brain/getURL"
                  tal:attributes="href url; data-url python:brain.getURL(1)">
             <div class="eea-notifier__content"><div class="eea-notifier__figure">
                 <img class="image" tal:attributes="src string:${url}/image_tile" />
             </div>
                 <div class="eea-notifier__text">
-                    <div class="eea-notifier__type">Related Article</div>
+                    <strong class="eea-notifier__type">Related Article</strong>
                     <span class="eea-notifier__heading" tal:content="title"></span>
                     <span class="eea-notifier__icon eea-icon eea-icon-arrow-down eea-icon-2x" />
                 </div>

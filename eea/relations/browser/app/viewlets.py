@@ -1,10 +1,15 @@
 """ eea.relations viewlets
 """
-from eea.themecentre.interfaces import IThemeTagging
+try:
+    from eea.themecentre.interfaces import IThemeTagging
+except ImportError:
+    from zope.interface import Interface
+    class IThemeTagging(Interface):
+        """ Dummy interface """
+
 from plone.app.layout.viewlets.common import ViewletBase
 from zope.component import getMultiAdapter
 from Products.CMFCore.utils import getToolByName
-from eea.themecentre.themecentre import getTheme
 from DateTime import DateTime
 from zope.component._api import queryAdapter
 
