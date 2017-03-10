@@ -128,6 +128,7 @@ jQuery(function($){
             });
         }
 
+        var analytics_push_count = 0;
         // set window location helper
         function set_location(obj) {
             var current_path = window.location.href;
@@ -136,6 +137,11 @@ jQuery(function($){
                 pushState(notifier_url);
                 document.title = obj.title;
                 $notifier.removeClass('eea-notifier--active');
+                // send google analytics page change the first time we change view
+                if (analytics_push_count <= 1) {
+                    window.ga ? window.ga('send', 'pageview') : '';
+                    analytics_push_count += 1;
+                }
             }
         }
 
