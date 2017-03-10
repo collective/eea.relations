@@ -49,7 +49,7 @@ class NextRelatedArticleViewlet(ViewletBase):
                  }
         date_range = {
             'query': (
-                now - (3 * 30),
+                now - (1 * 30),
                 now,
             ),
             'range': 'min:max',
@@ -62,5 +62,5 @@ class NextRelatedArticleViewlet(ViewletBase):
         for brain in res:
             if brain.getURL() != context_url:
                 return brain
-        return res
+        return ""
 

@@ -15,6 +15,6 @@
                 </div>
             </div>
         </a>
+        <a href="#" class="eea-to-top"><span class="eea-icon eea-icon-chevron-up eea-icon-2x" /><span class="eea-to-top-text">Go to top</span></a>
     </tal:defines>
-    <a href="#" class="eea-to-top"><span class="eea-icon eea-icon-chevron-up eea-icon-2x" /><span class="eea-to-top-text">Go to top</span></a>
 </tal:enabled>

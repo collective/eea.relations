@@ -173,8 +173,7 @@ jQuery(function($){
             }
             var content_box = content_core.getBoundingClientRect();
             var content_box_bottom = content_box.bottom;
-            var window_height = (window.innerHeight || document.documentElement.clientHeight);
-            if (content_box_bottom > 0 && (window_height + window.parseInt(content_box.height / 2) > content_box_bottom)) {
+            if (content_box_bottom > 0 && window.scrollY > content_box.height) {
                 $notifier.addClass('eea-notifier--active');
             }
             else {
