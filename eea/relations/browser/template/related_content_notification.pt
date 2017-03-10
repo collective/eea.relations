@@ -1,8 +1,7 @@
 <tal:enabled tal:condition="python:view.available()">
     <tal:defines tal:define="brain view/get_related_article;" tal:condition="brain">
         <a class="eea-notifier"
-                 tal:define="brain python:brain[0];
-                             title brain/Title|nothing;
+                 tal:define="title brain/Title|nothing;
                              url brain/getURL"
                  tal:attributes="href url; data-url python:brain.getURL(1)">
             <div class="eea-notifier__content"><div class="eea-notifier__figure">
