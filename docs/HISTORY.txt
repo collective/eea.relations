@@ -1,8 +1,13 @@
 Changelog
 =========
 
-10.1.dev0 - (unreleased)
-------------------------
+10.2 - (2018-03-14)
+-------------------
+* Change: add reference browser on jQuery dome ready
+ [ichim-david refs #91577]
+
+10.1 - (2017-12-12)
+-------------------
 * Change: Replace eeacms/zptlint with eeacms/plone-test:4 zptlint
   [avoinea refs #90415]
 * Change: Update tests to work with eea.facetednavigation 10.0+

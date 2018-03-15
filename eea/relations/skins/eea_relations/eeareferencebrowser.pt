@@ -83,7 +83,9 @@ Usage:
       <!-- Script -->
       <metal:script define-slot="script">
         <script type="text/javascript" tal:content="string:
-          var popup = new EEAReferenceBrowser.Widget('$fieldName');
+                jQuery(function($) {
+                    var popup = new EEAReferenceBrowser.Widget('$fieldName');
+                });
         "></script>
       </metal:script>
 
