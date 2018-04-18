@@ -1,8 +1,12 @@
 =============
 EEA Relations
 =============
-.. image:: http://ci.eionet.europa.eu/job/eea/job/eea.relations/job/master/badge/icon
-  :target: http://ci.eionet.europa.eu/job/eea/job/eea.relations/job/master/display/redirect
+.. image:: https://ci.eionet.europa.eu/buildStatus/icon?job=eea/eea.relations/develop
+  :target: https://ci.eionet.europa.eu/job/eea/job/eea.relations/job/develop/display/redirect
+  :alt: develop
+.. image:: https://ci.eionet.europa.eu/buildStatus/icon?job=eea/eea.relations/master
+  :target: https://ci.eionet.europa.eu/job/eea/job/eea.relations/job/master/display/redirect
+  :alt: master
 
 Introduction
 ============
