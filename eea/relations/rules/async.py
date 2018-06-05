@@ -53,7 +53,7 @@ def forward_transition_change(obj, transition, portal_url=''):
 def backward_transition_change(obj, transition, portal_url=None):
     """ Backward workflow state changed related items
     """
-    backRefs = obj.getBRefs()
+    backRefs = obj.getBRefs('relatesTo')
     if not backRefs:
         return
 
