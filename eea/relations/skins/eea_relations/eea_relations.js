@@ -1,9 +1,9 @@
 /* EXTERNAL DEPENDENCIES: eea.tabs.js */
 
 /* client side pagination
- * eg: http://www.eea.europa.eu/code/design-elements#toc-66
+ * eg: https://www.eea.europa.eu/code/design-elements#toc-66
  * used in relatedItems tabs
- * http://www.eea.europa.eu/publications/eu-2010-biodiversity-baseline
+ * https://www.eea.europa.eu/publications/eu-2010-biodiversity-baseline
  */
 jQuery(function($){
     // 13870 sort relations based on given criteria
