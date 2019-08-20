@@ -13,6 +13,7 @@ setup(name=NAME,
                    "way to manage relations in a Plone site. it provides a new "
                    "reference browser widget and a central management "
                    "interface for relations, their labels and requirements."),
+      long_description_content_type="text/x-rst",
       long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # https://pypi.python.org/pypi?%3Aaction=list_classifiers

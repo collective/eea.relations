@@ -117,8 +117,9 @@ Usage:
 
                 <span class="photoAlbumEntryWrapper">
                     <img tal:attributes="title desc_or_title;
-                                         alt pretty_title;
-                                         src string:${img_url}/image_thumb" />
+                            alt pretty_title;
+                            src string:${img_url}/image_thumb" tal:condition="python: thumb_scale == 'image_thumb'" />
+                            <span class="photoAlbumEntryWrapperImg lazy" tal:attributes="data-src string:${img_url}/${thumb_scale}" tal:condition="python: thumb_scale != 'image_thumb'"><!--?--></span>
                 </span>
                 <span class="photoAlbumEntryTitle" tal:content="pretty_title"></span>
                 <span class="photoAlbumEntryDescription"
