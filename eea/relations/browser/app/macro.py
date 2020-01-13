@@ -4,6 +4,7 @@ from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from eea.relations.component import getForwardRelationWith
 from eea.relations.component import getBackwardRelationWith
+from eea.relations.component import queryForwardRelations
 from plone.memoize.view import memoize
 
 
@@ -140,6 +141,19 @@ class Macro(BrowserView):
             tabs[name].append(relation)
         tabs = tabs.items()
         return tabs
+
+    @memoize
+    def no_relations_entered(self):
+        """ """
+        obj = self.context
+        ctypes = list(queryForwardRelations(obj))
+        relations = []
+        forward_backward_auto_relations = self.forward_backward_auto()
+        for ctype in ctypes:
+            if getattr(ctype, 'no_relation_label', False):
+                if ctype.forward_label not in forward_backward_auto_relations:
+                    relations.append(ctype)
+        return relations
 
     def forward_backward_auto(self):
         """ Return forward, backward and auto relations sorted by category

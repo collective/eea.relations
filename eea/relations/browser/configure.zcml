@@ -97,7 +97,7 @@
                 name="eea.relations.macro"
                 class=".app.macro.Macro"
                 permission="zope2.View"
-                allowed_attributes="forward backward forward_backward_auto" />
+                allowed_attributes="forward backward forward_backward_auto no_relations_entered" />
 
   <!-- Bad relations -->
   <browser:page for="..interfaces.IRelationsTool"
@@ -105,6 +105,16 @@
                 template="template/badrelations.pt"
                 class=".app.badrelations.View"
                 permission="cmf.ModifyPortalContent" />
+
+  <!--? Viewlets -->
+  <browser:viewlet
+    name="eea.relations.status"
+    for="*"
+    manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+    template="template/relation_status.pt"
+    class=".app.viewlets.RelationsStatusViewlet"
+    permission="zope2.View"
+  />
 
   <browser:resourceDirectory
     name="eea.relations.css"

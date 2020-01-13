@@ -58,7 +58,16 @@ Optional parameters:
                   <div metal:use-macro="here/eea_relateditems/macros/relatedItems"></div>
               </tal:def>
           </tal:tab>
+
+        <tal:tab repeat="relation relations/no_relations_entered">
+          <tal:def define="label relation/forward_label; message relation/no_relation_label">
+            <h3 tal:content="label" i18n:translate="" class="notoc">Relation label</h3>
+            <div class="portalMessage noMessage" tal:content="structure message"></div>
+          </tal:def>
+        </tal:tab>
+
       </div>
+    
   </tal:forward_backward>
 
   </div>

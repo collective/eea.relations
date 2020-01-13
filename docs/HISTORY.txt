@@ -1,6 +1,13 @@
 Changelog
 =========
 
+10.9 - (2020-01-10)
+--------------------------
+* Feature: added ability to display a message to logged in users and still
+  show a related title with body for anonymous users in case no relations are
+  added for a given possible relation
+  [ichim-david refs #112068]
+
 10.8 - (2019-08-19)
 --------------------------
 * Change: eea_relatedItems relatedItems macro album view now adds background

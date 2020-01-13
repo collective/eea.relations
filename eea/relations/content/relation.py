@@ -92,6 +92,19 @@ RelationSchema = atapi.Schema((
             i18n_domain="eea"
         )
     ),
+
+    atapi.TextField('no_relation_label',
+         schemata='default',
+         searchable=0,
+         widget=atapi.TextAreaWidget(
+             label='No relation Label',
+             description="Label to be used when no relation is added",
+             label_msgid="label_no_relation_label",
+             description_msgid="help_no_relation_label",
+             i18n_domain="eea"
+        )
+    ),
+
     atapi.TextField('description',
         schemata='default',
         searchable=1,

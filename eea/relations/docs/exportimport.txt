@@ -68,6 +68,7 @@ See default faceted portal types
       <property name="title">All -&gt; All</property>
       <property name="forward_label"></property>
       <property name="backward_label"></property>
+      <property name="no_relation_label"></property>
       <property name="description"></property>
       <property name="required">False</property>
       <property name="required_for"/>
@@ -124,6 +125,7 @@ Import some data
       <property name="title">Folder to Folder</property>
       <property name="forward_label">Label for forward relations</property>
       <property name="backward_label">Label for backward relations</property>
+      <property name="no_relation_label"></property>
       <property name="description">A folder to folder relation</property>
       <property name="required">True</property>
       <property name="required_for">
@@ -158,6 +160,7 @@ Purge content-types properties
       <property name="title">Folder to Folder</property>
       <property name="forward_label">Label for forward relations</property>
       <property name="backward_label">Label for backward relations</property>
+      <property name="no_relation_label"></property>
       <property name="description">A folder to folder relation</property>
       <property name="required">True</property>
       <property name="required_for">
@@ -193,6 +196,7 @@ Purge relations properties
       <property name="title">Folder to Folder</property>
       <property name="forward_label">Label for forward relations</property>
       <property name="backward_label">Label for backward relations</property>
+      <property name="no_relation_label"></property>
       <property name="description">A folder to folder relation</property>
       <property name="required">True</property>
       <property name="required_for">
@@ -218,6 +222,7 @@ Purge content-type
       <property name="title">Folder to Folder</property>
       <property name="forward_label">Label for forward relations</property>
       <property name="backward_label">Label for backward relations</property>
+      <property name="no_relation_label"></property>
       <property name="description">A folder to folder relation</property>
       <property name="required">True</property>
       <property name="required_for">

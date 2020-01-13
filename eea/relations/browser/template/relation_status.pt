@@ -1,0 +1,16 @@
+<metal:condition tal:condition="view/available" >
+  <metal:no_relations_entered tal:define="relations view/no_relations_entered" tal:condition="relations">
+    <div class="portalMessage warningMessage">
+      <span tal:omit-tag="" i18n:translate="">
+        No relations are added for related content tabs:
+      </span>
+    <tal:relation tal:repeat="relation relations">
+        <p>
+        <a tal:attributes="href python: context.absolute_url() + '#tab-' + relation.forward_label.lower().replace(' ', '-')" tal:content="relation/forward_label"></a>
+        </p>
+
+    </tal:relation>
+    </div>
+
+  </metal:no_relations_entered>
+</metal:condition>
