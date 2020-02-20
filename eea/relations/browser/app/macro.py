@@ -149,9 +149,11 @@ class Macro(BrowserView):
         ctypes = list(queryForwardRelations(obj))
         relations = []
         forward_backward_auto_relations = self.forward_backward_auto()
+        tab_titles = [i[0] for i in forward_backward_auto_relations] if \
+            forward_backward_auto_relations else []
         for ctype in ctypes:
             if getattr(ctype, 'no_relation_label', False):
-                if ctype.forward_label not in forward_backward_auto_relations:
+                if ctype.forward_label not in tab_titles:
                     relations.append(ctype)
         return relations
 

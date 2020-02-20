@@ -1,6 +1,11 @@
 Changelog
 =========
 
+11.0 - (2020-02-12)
+---------------------------
+* Change: Refs #113376 ensure interface content type is read before a portal type content type
+  [ichim-david]
+
 10.9 - (2020-01-10)
 --------------------------
 * Feature: added ability to display a message to logged in users and still
