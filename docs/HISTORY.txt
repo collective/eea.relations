@@ -1,6 +1,12 @@
 Changelog
 =========
 
+11.1 - (2020-06-22)
+---------------------------
+* Change: hide relation information within an accordion and display expired or
+  non published ribbon on photoAlbumEntry entries
+  [ichim-david refs #112068]
+
 11.0 - (2020-02-12)
 ---------------------------
 * Change: Refs #113376 ensure interface content type is read before a portal type content type
