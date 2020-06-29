@@ -30,13 +30,13 @@ Optional parameters:
      i18n:domain="eea"
      tal:condition="context/@@plone_context_state/is_view_template">
   <div class="" tal:define="mini_header python:context.restrictedTraverse('@@miniheader_content_types', lambda: False)();
-        relations nocall:here/@@eea.relations.macro;
-        thumb_scale thumb_scale | string:image_thumb;
-        forward_backward_auto_tabs python:relations.forward_backward_auto();
-        templateStyle templateStyle|string:album_view;"
-        tal:condition="python:forward_backward_auto_tabs"
+      relations nocall:here/@@eea.relations.macro;
+      thumb_scale thumb_scale | string:image_thumb;
+      forward_backward_auto_tabs python:relations.forward_backward_auto();
+      templateStyle templateStyle|string:album_view;"
+       tal:condition="python:forward_backward_auto_tabs"
        tal:attributes="class python: 'related-wrapper fullwidth-bg eea-block bg-secondary' if mini_header else 'related-wrapper'">
-    <div id="relatedItems">
+    <div id="relatedItems" class="relatedItems">
       <tal:relatedTitle metal:define-slot="relatedTitle">
         <h2 i18n:translate="">Related content</h2>
       </tal:relatedTitle>
@@ -131,7 +131,7 @@ Optional parameters:
         show_ribbon python: True if is_expired or not published else False;
         time item/effective;"
          tal:attributes="data-effective time/millis|nothing;
-        data-title pretty_title;">
+            data-title pretty_title;">
       <a tal:attributes="href listing_url;
           title pretty_title;
           class python:cloud or video or animation">
@@ -144,7 +144,8 @@ Optional parameters:
                                 class="photoAlbumEntryWrapperImg lazy" tal:attributes="data-src string:${img_url}/${thumb_scale}" tal:condition="python: thumb_scale != 'image_thumb'"><!--?--></span>
                 </span>
 
-        <span class="photoAlbumEntryTitleWrapper" tal:attributes="class python:'photoAlbumEntryTitleWrapper expired'  if show_ribbon else  'photoAlbumEntryTitleWrapper' ">
+        <span class="photoAlbumEntryTitleWrapper" tal:attributes="class python:'photoAlbumEntryTitleWrapper expired'  if show_ribbon else  'photoAlbumEntryTitleWrapper'">
+          <span class="photoAlbumEntryType" tal:content="portal_type" tal:condition="mini_header"></span>
           <div class="ribbon-wrapper" tal:condition="show_ribbon">
             <div class="ribbon" tal:content="python:context.translate('Archived') if is_expired else context.translate('Draft')"></div>
           </div>
@@ -172,13 +173,13 @@ Optional parameters:
           time item/effective;
           pretty_title item/title_or_id;"
            tal:attributes="data-effective time/millis|nothing;
-              data-title pretty_title;">
-              <a class="tileImage"
-           tal:attributes="href url; title title; alt title;
-              class python:'video-fancybox tileImage' if is_video else 'tileImage'">
-        <img tal:attributes="src python:'%s/%s' % (img_url,thumb_scale);
-            title title; alt title;" />
-      </a>
+          data-title pretty_title;">
+        <a class="tileImage"
+             tal:attributes="href url; title title; alt title;
+                class python:'video-fancybox tileImage' if is_video else 'tileImage'">
+          <img tal:attributes="src python:'%s/%s' % (img_url,thumb_scale);
+              title title; alt title;" />
+        </a>
         <h3 class="tileHeadline">
           <a tal:attributes="href  url;
               title description;
@@ -190,7 +191,7 @@ Optional parameters:
         <p class="tileFooter">
           <a class="moreLink"
                tal:attributes="href url;
-                  title title;"
+              title title;"
                i18n:translate="">
             Read more
           </a>

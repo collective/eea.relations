@@ -1,6 +1,14 @@
 Changelog
 =========
 
+11.2 - (2020-06-26)
+---------------------------
+* Feature: added draft or archived info within photoAlbumEntry
+  [ichim-david refs #117295]
+* Feature: added photoAlbumEntryType info to related albums for mini header
+  condition
+  [ichim-david refs #117296]
+
 11.1 - (2020-06-22)
 ---------------------------
 * Change: hide relation information within an accordion and display expired or
