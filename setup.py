@@ -48,6 +48,7 @@ setup(name=NAME,
           'plone.api',
           'plone.stringinterp >= 1.0.14',
           'Products.TALESField',
+          'zc.relation',
       ],
       extras_require={
           'test': [

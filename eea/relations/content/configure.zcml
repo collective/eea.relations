@@ -12,4 +12,8 @@
     <implements interface=".interfaces.IBaseObject" />
   </class>
 
+  <class class="plone.dexterity.content.DexterityContent">
+    <implements interface=".interfaces.IBaseObject" />
+  </class>
+
 </configure>

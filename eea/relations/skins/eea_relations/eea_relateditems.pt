@@ -29,13 +29,14 @@ Optional parameters:
 <tal:relatedItems metal:define-macro="relatedItemsWithThumbs"
      i18n:domain="eea"
      tal:condition="context/@@plone_context_state/is_view_template">
-  <div class="" tal:define="mini_header python:context.restrictedTraverse('@@miniheader_content_types', lambda: False)();
+  <div tal:define="mini_header python:context.restrictedTraverse('@@miniheader_content_types', lambda: False)();
+      klass python: 'related-wrapper';
       relations nocall:here/@@eea.relations.macro;
       thumb_scale thumb_scale | string:image_thumb;
       forward_backward_auto_tabs python:relations.forward_backward_auto();
       templateStyle templateStyle|string:album_view;"
-       tal:condition="python:forward_backward_auto_tabs"
-       tal:attributes="class python: 'related-wrapper fullwidth-bg eea-block bg-secondary' if mini_header else 'related-wrapper'">
+      tal:attributes="class python: klass if not mini_header else klass + ' fullwidth-bg eea-block bg-secondary'"
+       tal:condition="python:forward_backward_auto_tabs">
     <div id="relatedItems" class="relatedItems">
       <tal:relatedTitle metal:define-slot="relatedTitle">
         <h2 i18n:translate="">Related content</h2>
@@ -119,7 +120,7 @@ Optional parameters:
         item_interfaces item/@@plone_interface_info;
         is_video python:item_interfaces.provides('eea.mediacentre.interfaces.IVideo');
         css_class python: 'video-fancybox' if is_video else '';
-        portal_type item/portal_type;
+        portal_type item/Type|item/portal_type;
         video python:'video-fancybox' if is_video and portal_type != 'FlashFile' else '';
         animation python:'animation-fancybox' if portal_type == 'FlashFile' else '';
         cloud python: 'video-fancybox cloudvideo' if portal_type == 'CloudVideo' else '';

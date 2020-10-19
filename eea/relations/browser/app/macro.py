@@ -1,11 +1,16 @@
 """ View macro utils
 """
+from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from eea.relations.component import getForwardRelationWith
 from eea.relations.component import getBackwardRelationWith
 from eea.relations.component import queryForwardRelations
+from plone.dexterity.interfaces import IDexterityContent
 from plone.memoize.view import memoize
+from zc.relation.interfaces import ICatalog
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 
 
 class Macro(BrowserView):
@@ -74,6 +79,14 @@ class Macro(BrowserView):
         contentTypes = {}
         nonForwardRelations = set()
         relations = accessor()
+
+        # dexterity relations
+        if IDexterityContent.providedBy(self.context):
+            catalog = getUtility(ICatalog)
+            intids = getUtility(IIntIds)
+            relations = catalog.findRelations(dict(from_id=intids.getId(aq_inner(self.context))))
+            relations = [rel.to_object for rel in relations]
+
         filtered_relations = self.filter_relation_translations(relations)
         for relation in filtered_relations:
             if not self.checkPermission(relation) or relation.portal_type in \
@@ -110,6 +123,13 @@ class Macro(BrowserView):
         relations = getBRefs(relation) or []
         contentTypes = {}
         nonBackwardRelations = set()
+
+        # dexterity relations
+        if IDexterityContent.providedBy(self.context):
+            catalog = getUtility(ICatalog)
+            intids = getUtility(IIntIds)
+            relations = catalog.findRelations(dict(to_id=intids.getId(aq_inner(self.context))))
+            relations = [rel.from_object for rel in relations]
 
         filtered_relations = self.filter_relation_translations(relations)
         for relation in filtered_relations:

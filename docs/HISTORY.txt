@@ -1,6 +1,17 @@
 Changelog
 =========
 
+11.4 - (2020-09-23)
+---------------------------
+* Change: Related items now also appear for dexterity objects, not only archetypes
+  [iulianpetchesi #120841]
+
+11.3 - (2020-09-18)
+---------------------------
+* Change: use Type for photoALbumEntryType first then portal_type when setting
+  photoAlbumEntryType
+  [ichim-david refs #117296]
+
 11.2 - (2020-06-26)
 ---------------------------
 * Feature: added draft or archived info within photoAlbumEntry
