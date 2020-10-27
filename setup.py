@@ -49,6 +49,8 @@ setup(name=NAME,
           'plone.stringinterp >= 1.0.14',
           'Products.TALESField',
           'zc.relation',
+          'plone.app.relationfield',
+          'plone.app.referenceablebehavior'
       ],
       extras_require={
           'test': [

@@ -1,0 +1,59 @@
+<div lang="en"
+     xml:lang="en"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:metal="http://xml.zope.org/namespaces/metal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="eea"
+     tal:define="context            nocall:view/form/context;
+                 here               nocall:context;
+                 portal_url         nocall:context/portal_url;
+                 portal             portal_url/getPortalObject;
+                 z3c_widget         nocall:view;
+                 id                 view/id;
+                 inputname          view/name;
+                 inputvalue         view/value;
+                 here_url           request/getURL;
+                 member             context/portal_membership/getAuthenticatedMember;
+                 fieldName          z3c_widget/fieldname;
+                 tabindex           nothing">
+
+    <div class="eea-widget-referencebrowser eea-dexterity-relatedItems kssattr-fieldname-form.widgets.IRelatedItems.relatedItems" tal:attributes="id string:$inputname-widget" data-fieldname="form.widgets.IRelatedItems.relatedItems">
+
+        <!-- Edit -->
+        <input type="hidden" value="" tal:attributes="name string:$fieldName:default" />
+        <select style="display:none" tal:attributes="
+            multiple python:True;
+            name string:form.widgets.IRelatedItems.relatedItems;
+            id string:form.widgets.IRelatedItems.relatedItems;
+            class string:relatedItems-select;">
+            <tal:uids repeat="uid inputvalue">
+                <option selected="selected"
+                    tal:condition="uid" tal:attributes="value uid" tal:content="uid" />
+            </tal:uids>
+        </select>
+
+        <!-- View -->
+        <div class="eea-ref-selecteditems eea-ref-selecteditems-box"
+            tal:define="popup_view nocall:here/@@eeareferencebrowser-popup-selecteditems.html"
+            tal:content="structure python:popup_view(field=fieldName, uids=inputvalue)" />
+
+        <!-- Popup -->
+        <div title="Edit related items" tal:attributes="
+            title python: 'Edit';
+            id string:$fieldName-popup" i18n:attributes="title">
+            <tal:popup define="popup_view nocall:here/@@eeareferencebrowser-popup.html"
+                replace="structure python:popup_view(field=fieldName, uids=inputvalue)" />
+        </div>
+
+        <!-- Button -->
+        <input class="searchButton eea-ref-popup-button input-block" type="button" value="Edit" i18n:attributes="value"/>
+
+        <!-- Script -->
+        <script type="text/javascript" tal:content="string:
+                jQuery(function($) {
+                    var popup = new EEAReferenceBrowser.Widget('$fieldName', {'dexterity': true});
+                });
+        "></script>
+    </div>
+</div>

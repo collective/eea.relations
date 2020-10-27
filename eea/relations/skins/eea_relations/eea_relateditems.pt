@@ -39,7 +39,7 @@ Optional parameters:
        tal:condition="python:forward_backward_auto_tabs">
     <div id="relatedItems" class="relatedItems">
       <tal:relatedTitle metal:define-slot="relatedTitle">
-        <h2 i18n:translate="">Related content</h2>
+        <h2 i18n:translate="" class="notoc">Related content</h2>
       </tal:relatedTitle>
       <div class="sorter_ctl" style="margin-bottom: 1.5em; display:none;">
         <label for="sort_by"> <span i18n:translate="">Sort by:</span>
@@ -109,6 +109,7 @@ Optional parameters:
     wtool context/portal_workflow;
     templateStyle templateStyle"
      tal:condition="related">
+
   <tal:album_view tal:repeat="item related"
        tal:condition="python: templateStyle == 'album_view'">
     <div class="photoAlbumEntry"
@@ -142,7 +143,7 @@ Optional parameters:
                         alt pretty_title;
                         src string:${img_url}/image_thumb" tal:condition="python: thumb_scale == 'image_thumb'" />
                             <span
-                                class="photoAlbumEntryWrapperImg lazy" tal:attributes="data-src string:${img_url}/${thumb_scale}" tal:condition="python: thumb_scale != 'image_thumb'"><!--?--></span>
+                                class="photoAlbumEntryWrapperImg lazy" tal:attributes="data-src string:${img_url}/${thumb_scale}" tal:condition="python: thumb_scale != 'image_thumb'"><!-- comment ?--></span>
                 </span>
 
         <span class="photoAlbumEntryTitleWrapper" tal:attributes="class python:'photoAlbumEntryTitleWrapper expired'  if show_ribbon else  'photoAlbumEntryTitleWrapper'">

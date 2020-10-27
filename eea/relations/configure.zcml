@@ -20,5 +20,6 @@
   <include package=".upgrades" />
   <include package=".rules" />
   <include package=".events" />
+  <include package=".widget" />
 
 </configure>

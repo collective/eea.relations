@@ -386,10 +386,15 @@ EEAReferenceBrowser.Widget = function(name, options){
   this.options = options || {};
   this.fieldname = this.options.fieldname || name;
   this.context = jQuery('#' + name + "-widget");
+  this.storageedit = jQuery('#' + name, this.context);
+
+  if (options.dexterity) {
+    this.context = jQuery('.eea-dexterity-relatedItems');
+    this.storageedit = jQuery('.relatedItems-select');
+  }
   this.popup = jQuery('#' + name + '-popup', this.context);
   this.tips = jQuery('.popup-tips', this.popup);
   this.workspace = jQuery('.popup-tabs' , this.popup);
-  this.storageedit = jQuery('#' + name, this.context);
   this.storageview = jQuery('.eea-ref-selecteditems-box', this.context);
   this.basket = null;
   this.button = jQuery('.eea-ref-popup-button', this.context);

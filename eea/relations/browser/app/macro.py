@@ -85,7 +85,15 @@ class Macro(BrowserView):
             catalog = getUtility(ICatalog)
             intids = getUtility(IIntIds)
             relations = catalog.findRelations(dict(from_id=intids.getId(aq_inner(self.context))))
-            relations = [rel.to_object for rel in relations]
+            to_object = []
+            for obj in relations:
+                try:
+                    obj = obj.to_object
+                    to_object.append(obj)
+                except:
+                    # broken relation
+                    continue
+            relations = to_object
 
         filtered_relations = self.filter_relation_translations(relations)
         for relation in filtered_relations:
@@ -129,7 +137,15 @@ class Macro(BrowserView):
             catalog = getUtility(ICatalog)
             intids = getUtility(IIntIds)
             relations = catalog.findRelations(dict(to_id=intids.getId(aq_inner(self.context))))
-            relations = [rel.from_object for rel in relations]
+            from_object = []
+            for obj in relations:
+                try:
+                    obj = obj.from_object
+                    from_object.append(obj)
+                except:
+                    # broken relation
+                    continue
+            relations = from_object
 
         filtered_relations = self.filter_relation_translations(relations)
         for relation in filtered_relations:
