@@ -1,6 +1,12 @@
 Changelog
 =========
 
+11.6 - (2020-11-17)
+---------------------------
+* Bug fix: ensure relatedItems reference widget doesn't crash
+  when its not initialized on a dexterity content type
+  [ichim-david refs #121889]
+
 11.5 - (2020-10-22)
 ---------------------------
 * Feature: Added dexterity widget for relatedItems

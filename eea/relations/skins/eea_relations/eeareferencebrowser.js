@@ -388,7 +388,7 @@ EEAReferenceBrowser.Widget = function(name, options){
   this.context = jQuery('#' + name + "-widget");
   this.storageedit = jQuery('#' + name, this.context);
 
-  if (options.dexterity) {
+  if (this.options.dexterity) {
     this.context = jQuery('.eea-dexterity-relatedItems');
     this.storageedit = jQuery('.relatedItems-select');
   }
